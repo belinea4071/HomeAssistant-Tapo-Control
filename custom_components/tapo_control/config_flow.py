@@ -429,7 +429,7 @@ class FlowHandler(ConfigFlow):
                 self.tapoHost,
             )
             await self.async_set_unique_id(
-                DOMAIN + (self.reportedIPAddress if self.reportedIPAddress else host)
+            DOMAIN + (getattr(self, 'reportedIPAddress', None) or host)
             )
             return self.async_create_entry(
                 title=host,
@@ -447,7 +447,7 @@ class FlowHandler(ConfigFlow):
                     CONF_USERNAME: username,
                     CONF_PASSWORD: password,
                     CLOUD_PASSWORD: cloud_password,
-                    REPORTED_IP_ADDRESS: self.reportedIPAddress,
+                    REPORTED_IP_ADDRESS: getattr(self, 'reportedIPAddress', None),
                     ENABLE_SOUND_DETECTION: enable_sound_detection,
                     SOUND_DETECTION_PEAK: sound_detection_peak,
                     SOUND_DETECTION_DURATION: sound_detection_duration,
